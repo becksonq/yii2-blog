@@ -1,0 +1,31 @@
+{
+  "name": "becksonq/yii2-blog",
+  "description": "Yii2 blog for bootstrap4 createx theme",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "extension",
+    "blog",
+    "createx"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "becksonq",
+      "email": "becksonq@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "yiisoft/yii2": "~2.0.0"
+  },
+  "extra": {
+    "bootstrap": "becksonq\\blog\\Bootstrap"
+  },
+  "autoload": {
+    "psr-4": {
+      "becksonq\\blog\\": "src"
+    }
+  }
+}
