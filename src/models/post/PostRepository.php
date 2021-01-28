@@ -12,10 +12,10 @@ class PostRepository
      */
     public function get($id): Post
     {
-        if (!$brand = Post::findOne($id)) {
+        if (!$post = Post::findOne($id)) {
             throw new NotFoundException('Post is not found.');
         }
-        return $brand;
+        return $post;
     }
     
     /**
@@ -42,9 +42,9 @@ class PostRepository
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function remove(Post $brand): void
+    public function remove(Post $post): void
     {
-        if (!$brand->delete()) {
+        if (!$post->delete()) {
             throw new \RuntimeException('Removing error.');
         }
     }

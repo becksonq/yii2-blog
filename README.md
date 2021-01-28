@@ -37,5 +37,5 @@ Migrations
 
 
 ```
-yii migrate/up --migrationPath=@vendor/becksonq/yii2-blog/migrations
+yii migrate/up --migrationPath=@becksonq/blog/migrations
 ```

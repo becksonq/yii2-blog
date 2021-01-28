@@ -33,7 +33,7 @@ class PostReadRepository
      */
     public function getAll(): DataProviderInterface
     {
-        $query = Post::find()->active()->with('category');
+        $query = Post::find()->active()->with('category')->orderBy('id DESC');
         return $this->_getProvider($query);
     }
 
@@ -95,7 +95,41 @@ class PostReadRepository
     {
         return new ActiveDataProvider([
             'query' => $query,
-            'sort' => false,
+            'sort'  => false,
         ]);
+    }
+
+    /**
+     * Кнопка "предыдущий пост"
+     *
+     * @param int $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function prev(int $id)
+    {
+        $model = Post::find()->active()->andWhere(['<', 'id', $id])->orderBy('id DESC')->limit(1)->one();
+
+        if ($model !== null) {
+            return $model;
+        }
+
+        return null;
+    }
+
+    /**
+     * Кнопка "следующий пост"
+     *
+     * @param int $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function next(int $id)
+    {
+        $model = Post::find()->active()->andWhere(['>', 'id', $id])->orderBy('id ASC')->limit(1)->one();
+
+        if ($model !== null) {
+            return $model;
+        }
+
+        return null;
     }
 }

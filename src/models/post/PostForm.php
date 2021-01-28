@@ -20,6 +20,7 @@ class PostForm extends CompositeForm
     public $description;
     public $content;
     public $image;
+    public $caption;
 
     /**
      * PostForm constructor.
@@ -33,6 +34,7 @@ class PostForm extends CompositeForm
             $this->title = $post->title;
             $this->description = $post->description;
             $this->content = $post->content;
+            $this->caption = $post->caption;
             $this->meta = new MetaForm($post->meta);
             $this->tags = new TagsForm($post);
         } else {
@@ -46,7 +48,7 @@ class PostForm extends CompositeForm
     {
         return [
             [['categoryId', 'title'], 'required'],
-            [['title'], 'string', 'max' => 255],
+            [['title', 'caption'], 'string', 'max' => 255],
             [['categoryId'], 'integer'],
             [['description', 'content'], 'string'],
             [['image'], 'image'],
@@ -66,7 +68,7 @@ class PostForm extends CompositeForm
      */
     protected function internalForms(): array
     {
-        return ['meta', 'tags'];
+        return ['meta', 'tags',];
     }
 
     /**

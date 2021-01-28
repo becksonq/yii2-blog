@@ -1,19 +1,21 @@
 <?php
 
-namespace blog\widgets\carousel;
+namespace becksonq\blog\widgets\carousel;
 
 
-use blog\models\post\PostReadRepository;
+use becksonq\blog\models\post\PostReadRepository;
 use frontend\assets\AppAsset;
 use yii\base\Widget;
 
 /**
+ * Карусель на главной странице блога
+ *
  * Class PostCarouselWidget
  * @package blog\widgets\carousel
  *
  * Usage:
  * ------------------------------------
- * <?= PostCarouselWidget::widget([]) ?>
+ * <?= \becksonq\blog\widgets\carousel\PostCarouselWidget::widget([]) ?>
  */
 class PostCarouselWidget extends Widget
 {
@@ -25,7 +27,7 @@ class PostCarouselWidget extends Widget
      * @var AppAsset
      */
     public $bundle;
-    
+
     /**
      * PostCarouselWidget constructor.
      * @param PostReadRepository $repository
@@ -36,14 +38,14 @@ class PostCarouselWidget extends Widget
         parent::__construct($config);
         $this->_repository = $repository;
     }
-    
+
     /**
      * @return string
      */
     public function run()
     {
         return $this->render('index', [
-            'posts' => $this->_repository->getAll(),
+            'posts'  => $this->_repository->getAll(),
             'bundle' => $this->bundle,
         ]);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace blog\widgets\categories;
+namespace becksonq\blog\widgets\categories;
 
-use blog\models\category\Category;
-use blog\models\category\CategoryReadRepository;
+use becksonq\blog\models\category\Category;
+use becksonq\blog\models\category\CategoryReadRepository;
 use yii\base\Widget;
 
 /**
@@ -11,7 +11,7 @@ use yii\base\Widget;
  * @package blog\widgets\categories
  *
  * Usage
- * <?= CategoriesWidget::widget([]) ?>
+ * <?= \becksonq\blog\widgets\categories\CategoriesWidget::widget([]) ?>
  */
 class CategoriesWidget extends Widget
 {

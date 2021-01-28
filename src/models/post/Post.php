@@ -4,6 +4,7 @@ namespace becksonq\blog\models\post;
 
 use becksonq\blog\models\comment\Comment;
 use becksonq\blog\models\tags\TagAssignment;
+use common\models\user\User;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\models\behaviors\MetaBehavior;
 use shop\models\meta\Meta;
@@ -25,12 +26,16 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property string $image
  * @property integer $status
  * @property integer $comments_count
+ * @property integer $user_id
+ * @property string $caption
  *
  * @property Meta $meta
  * @property Category $category
  * @property TagAssignment[] $tagAssignments
  * @property Tag[] $tags
  * @property Comment[] $comments
+ * @property User $user
+ * @property PostImages[] $images
  *
  * @mixin ImageUploadBehavior
  */
@@ -40,28 +45,55 @@ class Post extends ActiveRecord
     const STATUS_ACTIVE = 1;
 
     public $meta;
-    public $author = 'Shoppyshop';
+    public $author = 'Блогер';
 
     /**
      * @param $categoryId
      * @param $title
      * @param $description
      * @param $content
+     * @param $caption
      * @param Meta $meta
      * @return Post
      */
-    public static function create($categoryId, $title, $description, $content, Meta $meta): self
+    public static function create($categoryId, $title, $description, $content, $caption, Meta $meta): self
     {
         $post = new static();
         $post->category_id = $categoryId;
         $post->title = $title;
         $post->description = $description;
         $post->content = $content;
+        $post->caption = $caption;
         $post->meta = $meta;
         $post->status = self::STATUS_DRAFT;
         $post->created_at = time();
         $post->comments_count = 0;
         return $post;
+    }
+
+    /**
+     * @param $insert
+     * @return bool
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function beforeSave($insert): bool
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        $this->user_id = \Yii::$app->user->identity->id;
+        return true;
+    }
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            $category = Category::findOne($this->category_id);
+            $category->updateCounters(['count' => -1]);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -77,14 +109,16 @@ class Post extends ActiveRecord
      * @param $title
      * @param $description
      * @param $content
+     * @param $caption
      * @param Meta $meta
      */
-    public function edit($categoryId, $title, $description, $content, Meta $meta): void
+    public function edit($categoryId, $title, $description, $content, $caption, Meta $meta): void
     {
         $this->category_id = $categoryId;
         $this->title = $title;
         $this->description = $description;
         $this->content = $content;
+        $this->caption = $caption;
         $this->meta = $meta;
     }
 
@@ -97,6 +131,8 @@ class Post extends ActiveRecord
             throw new \DomainException('post is already active.');
         }
         $this->status = self::STATUS_ACTIVE;
+        $category = Category::findOne($this->category_id);
+        $category->updateCounters(['count' => 1]);
     }
 
     /**
@@ -277,6 +313,16 @@ class Post extends ActiveRecord
         return $this->hasMany(Comment::class, ['post_id' => 'id']);
     }
 
+    public function getUser(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getImages(): ActiveQuery
+    {
+        return $this->hasMany(PostImages::class, ['post_id' => 'id'])->orderBy('sort');
+    }
+
     ##########################
 
     public static function tableName(): string
@@ -290,29 +336,7 @@ class Post extends ActiveRecord
             MetaBehavior::className(),
             [
                 'class'     => SaveRelationsBehavior::className(),
-                'relations' => ['tagAssignments', 'comment'],
-            ],
-            [
-                'class'                 => ImageUploadBehavior::className(),
-                'attribute'             => 'image',
-                'createThumbsOnRequest' => true,
-                'filePath'              => '@staticRoot/origin/posts/[[id]].[[extension]]',
-                'fileUrl'               => '@static/origin/posts/[[id]].[[extension]]',
-                'thumbPath'             => '@staticRoot/cache/posts/[[profile]]_[[id]].[[extension]]',
-                'thumbUrl'              => '@static/cache/posts/[[profile]]_[[id]].[[extension]]',
-                'thumbs'                => [
-                    'admin'       => ['width' => 100, 'height' => 70],
-                    'thumb'       => ['width' => 640, 'height' => 480],
-                    'carousel'    => ['width' => 600, 'height' => 350],
-                    'blog_list'   => ['width' => 600, 'height' => 333],
-                    'widget_list' => ['width' => 228, 'height' => 228],
-                    'origin'      => [
-                        'processor' => [
-                            new WaterMarker(1024, 768, '@frontend/web/image/logo.png'),
-                            'process'
-                        ]
-                    ],
-                ],
+                'relations' => ['tagAssignments', 'comments', 'images'],
             ],
         ];
     }

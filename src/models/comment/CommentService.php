@@ -12,8 +12,8 @@ use common\models\user\UserRepository;
  */
 class CommentService
 {
-    private $posts;
-    private $users;
+    private $_posts;
+    private $_users;
 
     /**
      * CommentService constructor.
@@ -22,8 +22,8 @@ class CommentService
      */
     public function __construct(PostRepository $posts, UserRepository $users)
     {
-        $this->posts = $posts;
-        $this->users = $users;
+        $this->_posts = $posts;
+        $this->_users = $users;
     }
 
     /**
@@ -34,13 +34,47 @@ class CommentService
      */
     public function create($postId, $userId, CommentForm $form): Comment
     {
-        $post = $this->posts->get($postId);
-        $user = $this->users->get($userId);
+        $post = $this->_posts->get($postId);
+        $user = $this->_users->get($userId);
 
         $comment = $post->addComment($user->id, $form->parentId, $form->text);
 
-        $this->posts->save($post);
+        $this->_posts->save($post);
 
         return $comment;
+    }
+
+    /**
+     * @param $postId
+     * @param $id
+     * @param CommentEditForm $form
+     */
+    public function edit($postId, $id, CommentEditForm $form): void
+    {
+        $post = $this->_posts->get($postId);
+        $post->editComment($id, $form->parentId, $form->text);
+        $this->_posts->save($post);
+    }
+
+    /**
+     * @param $postId
+     * @param $id
+     */
+    public function activate($postId, $id): void
+    {
+        $post = $this->_posts->get($postId);
+        $post->activateComment($id);
+        $this->_posts->save($post);
+    }
+
+    /**
+     * @param $postId
+     * @param $id
+     */
+    public function remove($postId, $id): void
+    {
+        $post = $this->_posts->get($postId);
+        $post->removeComment($id);
+        $this->_posts->save($post);
     }
 }

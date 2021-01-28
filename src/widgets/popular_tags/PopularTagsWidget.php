@@ -1,10 +1,10 @@
 <?php
 
 
-namespace blog\widgets\popular_tags;
+namespace becksonq\blog\widgets\popular_tags;
 
 
-use blog\models\tags\TagRepository;
+use becksonq\blog\models\tags\TagRepository;
 use yii\base\Widget;
 
 /**
@@ -13,7 +13,7 @@ use yii\base\Widget;
  *
  * Usage
  * ----------------------------------
- * <?= PopularTagsWidget::widget([]) ?>
+ * <?= \becksonq\blog\widgets\popular_tags\PopularTagsWidget::widget([]) ?>
  */
 class PopularTagsWidget extends Widget
 {

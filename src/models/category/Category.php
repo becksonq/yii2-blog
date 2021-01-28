@@ -13,6 +13,8 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $description
  * @property int $sort
+ * @property int $count
+ *
  * @property Meta $meta
  */
 class Category extends ActiveRecord

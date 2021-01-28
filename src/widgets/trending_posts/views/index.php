@@ -5,28 +5,29 @@ use yii\helpers\Url;
 
 /* @var $this \yii\web\View
  * @var $posts array
- * @var $post \blog\models\post\Post
+ * @var $post \becksonq\blog\models\post\Post
  */
 ?>
 
 <div class="widget mb-grid-gutter pb-grid-gutter border-bottom">
-    <h3 class="widget-title"><?= Yii::t('app', 'Популярные посты') ?></h3>
+    <?= Html::tag('h3', Yii::t('app', 'Популярные посты'), ['class' => 'widget-title']) ?>
 
-    <?php
-    foreach ($posts as $post) : ?>
+    <?php foreach ($posts as $post) : ?>
         <div class="media align-items-center mb-3">
-            <!-- TODO: image & alt -->
-            <?= Html::a(Html::img('img/blog/widget/01.jpg',
-                ['class' => 'rounded', 'width' => '64', 'alt' => 'Post image']), Url::to(['/blog/post/post', 'id' => $post->id]), []) ?>
+            <?php foreach ($post->images as $image):
+                if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL): ?>
+                    <?= Html::a(Html::img(Html::encode($image->getThumbFileUrl('file', 'trending_post')),
+                        ['class' => 'rounded', 'width' => '64', 'alt' => Html::encode($post->title)]),
+                        Url::to(['post', 'id' => $post->id]), []) ?>
+                <?php endif; endforeach; ?>
             <div class="media-body pl-3">
-                <h6 class="blog-entry-title font-size-sm mb-0">
-                    <?= Html::a($post->title, Url::to(['/blog/post/post', 'id' => $post->id]), []) ?>
-                </h6>
-                <span class="font-size-ms text-muted">by
-                    <?= Html::a($post->author, ['#'], ['class' => 'blog-entry-meta-link']) ?>
-                </span>
+                <?= Html::tag('h6', Html::a(Html::encode($post->title), Url::to(['post', 'id' => $post->id])), [
+                    'class' => 'blog-entry-title font-size-sm mb-0',
+                ]) ?>
+                <?= Html::tag('span', Html::a(Html::encode($post->user->username), null, [
+                    'class' => 'blog-entry-meta-link'
+                ]), ['class' => 'font-size-ms text-muted']) ?>
             </div>
         </div>
-    <?php endforeach;
-    ?>
+    <?php endforeach; ?>
 </div>

@@ -14,6 +14,7 @@ class CommentForm extends Model
         return [
             [['text'], 'required'],
             ['text', 'string'],
+            ['text', 'filter', 'filter' => 'strip_tags'],
             ['parentId', 'integer'],
         ];
     }

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace blog\widgets\trending_posts;
+namespace becksonq\blog\widgets\trending_posts;
 
 
-use blog\models\post\PostReadRepository;
+use becksonq\blog\models\post\PostReadRepository;
 use yii\base\Widget;
 
 /**
@@ -13,7 +13,7 @@ use yii\base\Widget;
  *
  * Usage
  * ------------------------------------
- * <?= TrendingPostsWidget::widget([]) ?>
+ * <?= \becksonq\blog\widgets\trending_posts\TrendingPostsWidget::widget([]) ?>
  */
 class TrendingPostsWidget extends Widget
 {

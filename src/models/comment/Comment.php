@@ -3,8 +3,10 @@
 namespace becksonq\blog\models\comment;
 
 use becksonq\blog\models\post\Post;
+use common\models\user\User;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\HtmlPurifier;
 
 /**
  * @property int $id
@@ -16,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property bool $active
  *
  * @property Post $post
+ * @property User $user
  */
 class Comment extends ActiveRecord
 {
@@ -84,6 +87,11 @@ class Comment extends ActiveRecord
     public function getPost(): ActiveQuery
     {
         return $this->hasOne(Post::class, ['id' => 'post_id']);
+    }
+
+    public function getUser(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

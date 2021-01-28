@@ -3,6 +3,8 @@
 
 namespace becksonq\blog;
 
+use Yii;
+use yii\base\Application;
 
 /**
  * Class Bootstrap
@@ -10,20 +12,27 @@ namespace becksonq\blog;
  */
 class Bootstrap implements \yii\base\BootstrapInterface
 {
-
     /**
      * @inheritDoc
      */
     public function bootstrap($app)
     {
-        //Правила маршрутизации
-        $app->getUrlManager()->addRules([
-            'blog' => 'blog/post/index',
-        ], false);
-        /*
-         * Регистрация модуля в приложении
-         * (вместо указания в файле frontend/config/main.php
-         */
-        $app->setModule('blog', 'becksonq\blog\Module');
+        /** @var Module $module */
+        if ($app->hasModule('blog') && ($module = $app->getModule('blog')) instanceof Module) {
+
+            $configUrlRule = [
+                'prefix' => $module->urlPrefix,
+                'rules'  => $module->urlRules,
+            ];
+
+            if ($module->urlPrefix != 'blog') {
+                $configUrlRule['routePrefix'] = 'blog';
+            }
+
+            $configUrlRule['class'] = 'yii\web\GroupUrlRule';
+            $rule = Yii::createObject($configUrlRule);
+
+            $app->urlManager->addRules([$rule], false);
+        }
     }
 }

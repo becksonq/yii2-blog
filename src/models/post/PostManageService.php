@@ -2,6 +2,7 @@
 
 namespace becksonq\blog\models\post;
 
+use shop\exceptions\NotFoundException;
 use shop\models\meta\Meta;
 use becksonq\blog\models\tags\Tag;
 use becksonq\blog\models\category\CategoryRepository;
@@ -52,6 +53,7 @@ class PostManageService
             $form->title,
             $form->description,
             $form->content,
+            $form->caption,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -62,6 +64,12 @@ class PostManageService
         if ($form->image) {
             $post->setImage($form->image);
         }
+
+//        if ($form->images->files !== null) {
+//            foreach ($form->images->files as $file) {
+//                $post->addImage($file);
+//            }
+//        }
 
         foreach ($form->tags->existing as $tagId) {
             $tag = $this->tags->get($tagId);
@@ -97,6 +105,7 @@ class PostManageService
             $form->title,
             $form->description,
             $form->content,
+            $form->caption,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

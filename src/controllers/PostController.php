@@ -2,12 +2,15 @@
 
 namespace becksonq\blog\controllers;
 
+use becksonq\blog\BlogAssetBundle;
 use becksonq\blog\models\comment\CommentForm;
 use becksonq\blog\models\category\CategoryReadRepository;
+use becksonq\blog\models\post\PostManageService;
 use becksonq\blog\models\post\PostReadRepository;
 use becksonq\blog\models\tags\TagRepository;
 use becksonq\blog\models\comment\CommentService;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -17,8 +20,6 @@ use yii\web\NotFoundHttpException;
  */
 class PostController extends Controller
 {
-    public $layout = 'blog';
-
     private $_service;
     private $_posts;
     private $_categories;
@@ -41,11 +42,26 @@ class PostController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function behaviors(): array
+    {
+        return [
+            'verbs' => [
+                'class'   => VerbFilter::className(),
+                'actions' => [
+                    'delete'          => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @return mixed
      */
     public function actionIndex()
     {
-        $this->layout = 'grocery-store';
+        BlogAssetBundle::register($this->view);
 
         $dataProvider = $this->_posts->getAll();
 
@@ -77,6 +93,7 @@ class PostController extends Controller
      * @param $id
      * @return mixed
      * @throws NotFoundHttpException
+     * @deprecated
      */
     public function actionTag($id)
     {
@@ -99,12 +116,16 @@ class PostController extends Controller
      */
     public function actionPost($id)
     {
+        BlogAssetBundle::register($this->view);
+
         if (!$post = $this->_posts->find($id)) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $this->render('post', [
+        return $this->render('post-single', [
             'post' => $post,
+            'prev' => $this->_posts->prev($id),
+            'next' => $this->_posts->next($id),
         ]);
     }
 
@@ -116,7 +137,7 @@ class PostController extends Controller
     public function actionComment($id)
     {
         if (!$post = $this->_posts->find($id)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested post does not exist.');
         }
 
         $form = new CommentForm();
