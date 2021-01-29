@@ -1,6 +1,9 @@
 Yii2 blog
 =========
-Yii2 blog for bootstrap4 createx theme
+Yii2 blog for bootstrap4 <strong>createx</strong> theme
+
+###Warning!
+This project is for 2myshop.ru site only. Don't try to install it in your project.
 
 Installation
 ------------
@@ -21,15 +24,23 @@ or add
 
 to the require section of your `composer.json` file.
 
+In common/config/main.php
+
+```
+'modules' => [
+...
+    'blog' => [
+        'class'  => 'becksonq\blog\Module',
+        'layout' => '@frontend/themes/createx_grocery_store/views/layouts/main_fs',
+        'assets'  => '@frontend/themes/createx_grocery_store/web',
+    ],
+...
+],
+```
+
 
 Usage
 -----
-
-Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \becksonq\blog\AutoloadExample::widget(); ?>
-```
 
 
 Migrations

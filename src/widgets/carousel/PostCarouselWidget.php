@@ -4,7 +4,7 @@ namespace becksonq\blog\widgets\carousel;
 
 
 use becksonq\blog\models\post\PostReadRepository;
-use frontend\assets\AppAsset;
+use becksonq\blog\AppAsset;
 use yii\base\Widget;
 
 /**

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View
- * @var $bundle \frontend\themes\createx_grocery_store\assets\AppAsset
+ * @var $bundle \becksonq\blog\AppAsset
  */
 ?>
 

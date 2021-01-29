@@ -5,7 +5,7 @@
  * @var $category \shop\models\category\Category
  */
 
-use frontend\themes\createx_grocery_store\assets\AppAsset;
+use becksonq\blog\AppAsset;
 use yii\bootstrap4\Html;
 
 $bundle = AppAsset::register($this);

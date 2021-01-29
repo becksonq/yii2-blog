@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View
  * @var $dataProvider yii\data\DataProviderInterface
- * @var $bundle \frontend\themes\createx_grocery_store\assets\AppAsset
+ * @var $bundle \becksonq\blog\AppAsset
  */
 
 ?>

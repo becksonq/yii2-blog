@@ -34,6 +34,9 @@ class Module extends \yii\base\Module
 //        'post/<action:\w+>/<id:\d+>/<imageId:\d+>' => 'crud/post/<action>',
     ];
 
+    /** @var string external resource from common/config/main.php */
+    public $assets;
+
     /**
      * {@inheritdoc}
      */
@@ -42,6 +45,9 @@ class Module extends \yii\base\Module
         parent::init();
         if ($this->layout === null) {
             throw new NotFoundHttpException('Not found blog layout');
+        }
+        if ($this->assets === null) {
+            throw new NotFoundHttpException('Not found blog assets');
         }
 
         $this->modules = [

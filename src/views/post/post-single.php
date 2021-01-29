@@ -21,17 +21,6 @@ $tagLinks = [];
 foreach ($post->tags as $tag) {
     $tagLinks[] = Html::a(Html::encode($tag->name), ['tag', 'slug' => $tag->slug]);
 }
-//@todo перенести методы
-foreach ($prev->images as $image) {
-    if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL) {
-        $prevImage = $image;
-    }
-}
-foreach ($prev->images as $image) {
-    if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL) {
-        $nextImage = $image;
-    }
-}
 ?>
 
 <!-- Page Title (Light)-->
@@ -121,11 +110,7 @@ foreach ($prev->images as $image) {
                     'data-trigger'   => 'hover',
                     'data-html'      => 'true',
                     'data-content'   => $prev == null ?: '<div class="media align-items-center">'
-                        . Html::img($prevImage->getThumbFileUrl('file', 'navigation'), [
-                            'width' => '60',
-                            'class' => 'mr-3',
-                            'alt'   => $prev->title
-                        ]) . '<div class="media-body"><h6  class="font-size-sm font-weight-semibold mb-0">'
+                        . \becksonq\blog\models\helpers\PostHelper::prevBtnImage($prev) . '<div class="media-body"><h6  class="font-size-sm font-weight-semibold mb-0">'
                         . Html::encode($prev->title) . '</h6><span class="d-block font-size-xs text-muted">' . $prev->user->username . '</span></div></div>',
                 ]) ?>
                 <i class="czi-arrow-left mr-2"></i>
@@ -144,11 +129,7 @@ foreach ($prev->images as $image) {
                     'data-trigger'   => 'hover',
                     'data-html'      => 'true',
                     'data-content'   => $next == null ?: '<div class="media align-items-center">'
-                        . Html::img($nextImage->getThumbFileUrl('file', 'navigation'), [
-                            'width' => '60',
-                            'class' => 'mr-3',
-                            'alt'   => $next->title
-                        ]) . '<div class="media-body"><h6  class="font-size-sm font-weight-semibold mb-0">'
+                        . \becksonq\blog\models\helpers\PostHelper::nextBtnImage($next) . '<div class="media-body"><h6  class="font-size-sm font-weight-semibold mb-0">'
                         . Html::encode($next->title) . '</h6><span class="d-block font-size-xs text-muted">' . $next->user->username . '</span></div></div>'
                 ]) ?>
                 <?= Html::tag('span', Yii::t('app', 'Вперед'), ['class' => 'd-none d-sm-inline']) ?>
