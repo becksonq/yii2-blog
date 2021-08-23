@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Посты с тегом ' . $tag->name;
+$this->title = 'Посты с тегом "' . $tag->name . '"';
 
 $this->params['breadcrumbs'][] = ['label' => 'Blog', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $tag->name;
