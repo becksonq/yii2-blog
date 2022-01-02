@@ -1,8 +1,8 @@
 Yii2 blog
 =========
-Yii2 blog for bootstrap4 <strong>createx</strong> theme
+Yii2 blog for <strong>bootstrap4 createx</strong> theme
 
-###Warning!
+### Warning!
 This project is for 2myshop.ru site only. Don't try to install it in your project.
 
 Installation
