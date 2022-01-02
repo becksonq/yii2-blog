@@ -13,7 +13,10 @@ use yii\helpers\Html;
     <?= Html::tag('h3', Yii::t('app', 'Категории'), ['class' => 'widget-title']) ?>
     <ul class="widget-list">
         <?php
-        foreach ($categories as $category) : ?>
+        foreach ($categories as $category) :
+            if ($category->count == 0) {
+                continue;
+            } ?>
             <?= Html::beginTag('li', ['class' => 'widget-list-item']) ?>
             <!-- TODO: count постов -->
             <?= Html::a(Html::encode($category->name) . '<span class="font-size-xs text-muted ml-3">' . $category->count . '</span>',

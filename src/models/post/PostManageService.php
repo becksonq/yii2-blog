@@ -76,7 +76,7 @@ class PostManageService
             $post->assignTag($tag->id);
         }
 
-        $this->transaction->wrap(function () use ($post, $form) {
+        $this->transaction->wrap(function () use ($post, $form, $category) {
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->tags->findByName($tagName)) {
                     $tag = Tag::create($tagName, $tagName);
@@ -84,6 +84,7 @@ class PostManageService
                 }
                 $post->assignTag($tag->id);
             }
+            $category->updateCounters(['count' => 1]);
             $this->posts->save($post);
         });
 

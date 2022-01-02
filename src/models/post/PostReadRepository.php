@@ -75,7 +75,7 @@ class PostReadRepository
      */
     public function getPopular($limit): array
     {
-        return Post::find()->with('category')->orderBy(['comments_count' => SORT_DESC])->limit($limit)->all();
+        return Post::find()->with('category')->orderBy(['comments_count' => SORT_DESC, 'created_at' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
