@@ -21,9 +21,4 @@ class BlogAssetBundle extends \yii\web\AssetBundle
         'lg-fullscreen.js/dist/lg-fullscreen.min.js',
         'lg-zoom.js/dist/lg-zoom.min.js',
     ];
-
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\jui\JuiAsset',
-    ];
 }
