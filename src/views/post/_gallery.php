@@ -8,7 +8,10 @@ use becksonq\blog\models\post\PostImages;
 ?>
 
 <div class="cz-gallery row pb-2">
-    <?php foreach ($post->images as $image) {
+    <?php
+    $postImages = [];
+    $fullImage = [];
+    foreach ($post->images as $image) {
         if ($image->type == PostImages::TYPE_POST_SINGLE) {
             $postImages[] = $image;
         }
