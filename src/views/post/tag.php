@@ -6,7 +6,10 @@
  * @deprecated
  */
 
+use becksonq\blog\AppAsset;
 use yii\helpers\Html;
+
+$bundle = AppAsset::register($this);
 
 $this->title = 'Посты с тегом "' . $tag->name . '"';
 
@@ -14,6 +17,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Blog', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $tag->name;
 ?>
 
+<!-- Page title-->
+<!-- Page Title (Light)-->
 <div class="bg-secondary py-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
@@ -36,19 +41,19 @@ $this->params['breadcrumbs'][] = $tag->name;
     </div>
 </div>
 
-<!-- Page Content-->
+<!-- Page title + breadcrumb-->
+<!-- Content-->
 <div class="container pb-5 mb-2 mb-md-4">
     <!-- Featured posts carousel-->
     <?= \becksonq\blog\widgets\carousel\PostCarouselWidget::widget([]) ?>
 
     <hr class="mt-5">
-
-    <div class="row justify-content-center pt-5 mt-2">
+    <div class="row pt-5 mt-2">
         <!-- Entries list-->
-        <section class="col-lg-9">
-
+        <section class="col-lg-8">
             <?= $this->render('_list', [
                 'dataProvider' => $dataProvider,
+                'bundle'       => $bundle,
             ]) ?>
 
             <!-- Pagination-->
@@ -60,5 +65,7 @@ $this->params['breadcrumbs'][] = $tag->name;
                 ],
             ]) ?>
         </section>
+
+        <?= $this->render('_aside', []) ?>
     </div>
 </div>
