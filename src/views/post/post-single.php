@@ -52,7 +52,7 @@ foreach ($post->tags as $tag) {
             <!-- Post meta-->
             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4 mt-n1">
                 <div class="d-flex align-items-center font-size-sm mb-2">
-                    <?= Html::beginTag('a', ['class' => 'blog-entry-meta-link', 'href' => Url::to(['#'])]) ?>
+                    <?= Html::beginTag('a', ['class' => 'blog-entry-meta-link', 'href' => Url::to(['##'])]) ?>
                     <div class="blog-entry-author-ava">
                         <?= Html::img(
                             Html::encode($post->user->avatar) ?: (Yii::getAlias('@web') . '/uploads/img/no-person.webp'),
@@ -85,17 +85,17 @@ foreach ($post->tags as $tag) {
                 <div class="mt-3 mr-3">
                     <?php foreach ($post->tags as $tag):
                         //@todo: link to search by tags
-                        echo Html::a('#' . $tag->name, Url::to(['#']), ['class' => 'btn-tag mr-2 mb-2']);
+                        echo Html::a('#' . $tag->name, Url::to(['##']), ['class' => 'btn-tag mr-2 mb-2']);
                     endforeach; ?>
                 </div>
                 <div class="mt-3">
                     <?= Html::tag('span', Yii::t('app', 'Поделиться:'),
                         ['class' => 'd-inline-block align-middle text-muted font-size-sm mr-3 mb-2']) ?>
-                    <?= Html::a('<i class="czi-facebook"></i>', Url::to(['#']),
+                    <?= Html::a('<i class="czi-facebook"></i>', Url::to(['##']),
                         ['class' => 'social-btn sb-facebook mr-2 mb-2']) ?>
-                    <?= Html::a('<i class="czi-twitter"></i>', Url::to(['#']),
+                    <?= Html::a('<i class="czi-twitter"></i>', Url::to(['##']),
                         ['class' => 'social-btn sb-twitter mr-2 mb-2']) ?>
-                    <?= Html::a('<i class="czi-pinterest"></i>', Url::to(['#']),
+                    <?= Html::a('<i class="czi-pinterest"></i>', Url::to(['##']),
                         ['class' => 'social-btn sb-pinterest mr-2 mb-2']) ?>
                 </div>
             </div>

@@ -16,7 +16,7 @@ $url = Url::to(['post', 'id' => $model->id]);
     <div class="left-column">
         <div class="d-flex align-items-center font-size-sm pb-2 mb-1">
 
-            <?= Html::beginTag('a', ['class' => 'blog-entry-meta-link', 'href' => Url::to(['#'])]) ?>
+            <?= Html::beginTag('a', ['class' => 'blog-entry-meta-link', 'href' => Url::to(['##'])]) ?>
             <div class="blog-entry-author-ava">
                 <?= Html::img(
                     Html::encode($model->user->avatar) ?: (Yii::getAlias('@web') . '/uploads/img/no-person.webp'),
@@ -27,7 +27,7 @@ $url = Url::to(['post', 'id' => $model->id]);
 
             <span class="blog-entry-meta-divider"></span>
 
-            <?= Html::a(Yii::$app->formatter->asDate($model->created_at, 'php:M d. Y'), Url::to(['#']),
+            <?= Html::a(Yii::$app->formatter->asDate($model->created_at, 'php:M d. Y'), Url::to(['##']),
                 ['class' => 'blog-entry-meta-link',]) ?>
         </div>
         <?= Html::tag('h2', Html::a(Html::encode($model->title), Html::encode($url), []),
@@ -48,10 +48,10 @@ $url = Url::to(['post', 'id' => $model->id]);
         <div class="d-flex justify-content-between mb-1">
             <div class="font-size-sm text-muted pr-2 mb-2">#
                 <!-- @todo: здесь вывести массив тегов -->
-                <?= Html::a($model->category->name, Url::to(['#']), ['class' => 'blog-entry-meta-link']) ?>
+                <?= Html::a($model->category->name, Url::to(['##']), ['class' => 'blog-entry-meta-link']) ?>
             </div>
             <div class="font-size-sm mb-2">
-                <?= Html::a('<i class="czi-message"></i>' . $model->comments_count, Url::to(['#']), [
+                <?= Html::a('<i class="czi-message"></i>' . $model->comments_count, Url::to(['##']), [
                     'class' => 'blog-entry-meta-link text-nowrap',
                 ]) ?>
             </div>
