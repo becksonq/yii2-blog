@@ -71,14 +71,14 @@ class PostController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionCategory($slug)
+    public function actionCategory(int $id): string
     {
-        if (!$category = $this->_categories->findBySlug($slug)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        if (!$category = $this->_categories->find($id)) {
+            throw new NotFoundHttpException('The requested blog category does not exist.');
         }
 
         $dataProvider = $this->_posts->getAllByCategory($category);
@@ -114,7 +114,7 @@ class PostController extends Controller
      * @return mixed
      * @throws NotFoundHttpException
      */
-    public function actionPost($id)
+    public function actionSinglePost($id)
     {
         BlogAssetBundle::register($this->view);
 
@@ -122,7 +122,7 @@ class PostController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $this->render('post-single', [
+        return $this->render('single-post', [
             'post' => $post,
             'prev' => $this->_posts->prev($id),
             'next' => $this->_posts->next($id),
@@ -145,7 +145,7 @@ class PostController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $comment = $this->_service->create($post->id, Yii::$app->user->id, $form);
-                return $this->redirect(['post', 'id' => $post->id, '#' => 'comment_' . $comment->id]);
+                return $this->redirect(['single-post', 'id' => $post->id, '#' => 'comment_' . $comment->id]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
