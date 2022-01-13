@@ -26,8 +26,11 @@ class Module extends \yii\base\Module
 
     /** @var array The rules to be used in URL management. */
     public $urlRules = [
-        '<action:(index)>' => 'post/<action>',
-        '<action:\w+>/<id:\d+>' => 'post/<action>',
+//        '<action:(index)>' => 'post/<action>',
+//        '<action:\w+>/<id:\d+>' => 'post/<action>',
+        ['class' => 'becksonq\blog\utilities\BlogPostUrlRule'],
+        ['class' => 'becksonq\blog\utilities\BlogTagUrlRule'],
+        ['class' => 'becksonq\blog\utilities\BlogCategoryUrlRule'],
 //        'post/<action:\w+>' => 'crud/post/<action>',
 //        'post/<action:\w+>/<id:\d+>' => 'crud/post/<action>',
 //        'post/view/<id:\d+>' => 'crud/post/view',
