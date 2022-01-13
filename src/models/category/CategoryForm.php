@@ -64,7 +64,7 @@ class CategoryForm extends CompositeForm
             [['name',], 'required'],
             [['name', 'slug', 'title'], 'string', 'max' => 255],
             [['description'], 'string'],
-            [['name',],
+            [['name', 'slug',],
                 'unique',
                 'targetClass' => Category::class,
                 'filter'      => $this->_category ? ['<>', 'id', $this->_category->id] : null
