@@ -29,6 +29,24 @@ class PostReadRepository
     }
 
     /**
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findById($id)
+    {
+        return Post::find()->active()->with('category')->andWhere(['id' => $id])->one();
+    }
+
+    /**
+     * @param string $slug
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findBySlug(string $slug)
+    {
+        return Post::find()->active()->andWhere(['slug' => $slug])->limit(1)->one();
+    }
+
+    /**
      * @return DataProviderInterface
      */
     public function getAll(): DataProviderInterface

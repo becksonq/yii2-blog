@@ -17,6 +17,7 @@ class PostForm extends CompositeForm
 {
     public $categoryId;
     public $title;
+    public $slug;
     public $description;
     public $content;
     public $image;
@@ -47,6 +48,7 @@ class PostForm extends CompositeForm
     public function rules(): array
     {
         return [
+            ['slug', 'unique', 'targetClass' => self::class, 'message' => 'Post with the slug is exists'],
             [['categoryId', 'title'], 'required'],
             [['title', 'caption'], 'string', 'max' => 255],
             [['categoryId'], 'integer'],

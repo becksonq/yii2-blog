@@ -21,80 +21,84 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="post-view mb-5 pb-5">
 
-    <?php if ($post->isActive()): ?>
-        <?= Html::a('Draft', ['draft', 'id' => $post->id],
-            ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
-    <?php else: ?>
-        <?= Html::a('Activate', ['activate', 'id' => $post->id],
-            ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
-    <?php endif; ?>
-    <?= Html::a('Update', ['update', 'id' => $post->id], ['class' => 'btn btn-primary']) ?>
-    <?= Html::a('Delete', ['delete', 'id' => $post->id], [
-        'class' => 'btn btn-danger',
-        'data'  => [
-            'confirm' => 'Are you sure you want to delete this item?',
-            'method'  => 'post',
+    <p>
+        <?php if ($post->isActive()): ?>
+            <?= Html::a('Draft', ['draft', 'id' => $post->id],
+                ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
+        <?php else: ?>
+            <?= Html::a('Activate', ['activate', 'id' => $post->id],
+                ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
+        <?php endif; ?>
+        <?= Html::a('Update', ['update', 'id' => $post->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $post->id], [
+            'class' => 'btn btn-danger',
+            'data'  => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method'  => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <h5>Common</h5>
+    <?= DetailView::widget([
+        'model'      => $post,
+        'attributes' => [
+            'id',
+            [
+                'attribute' => 'status',
+                'value'     => PostHelper::statusLabel($post->status),
+                'format'    => 'raw',
+            ],
+            'title',
+            'slug',
+            [
+                'attribute' => 'description',
+                'value'     => function ($post) {
+                    return Yii::$app->formatter->asNtext($post->description);
+                }
+            ],
+            [
+                'attribute' => 'content',
+                'value'     => function ($post) {
+                    return Yii::$app->formatter->asHtml($post->content, [
+                        'Attr.AllowedRel'      => array('nofollow'),
+                        'HTML.SafeObject'      => true,
+                        'Output.FlashCompat'   => true,
+                        'HTML.SafeIframe'      => true,
+                        'URI.SafeIframeRegexp' => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
+                    ]);
+                }
+            ],
+            [
+                'attribute' => 'category_id',
+                'value'     => ArrayHelper::getValue($post, 'category.name'),
+            ],
+            [
+                'label' => 'Tags',
+                'value' => implode(', ', ArrayHelper::getColumn($post->tags, 'name')),
+            ],
         ],
     ]) ?>
 
-    <div class="row mt-3">
-        <div class="col-6">
-            <h5>Common</h5>
-            <?= DetailView::widget([
-                'model'      => $post,
-                'attributes' => [
-                    'id',
-                    [
-                        'attribute' => 'status',
-                        'value'     => PostHelper::statusLabel($post->status),
-                        'format'    => 'raw',
-                    ],
-                    'title',
-                    [
-                        'attribute' => 'category_id',
-                        'value'     => ArrayHelper::getValue($post, 'category.name'),
-                    ],
-                    [
-                        'label' => 'Tags',
-                        'value' => implode(', ', ArrayHelper::getColumn($post->tags, 'name')),
-                    ],
-                ],
-            ]) ?>
-        </div>
-        <div class="col-6">
-            <h5>SEO</h5>
-            <?= DetailView::widget([
-                'model'      => $post,
-                'attributes' => [
-                    [
-                        'attribute' => 'meta.title',
-                        'value'     => $post->meta->title,
-                    ],
-                    [
-                        'attribute' => 'meta.description',
-                        'value'     => $post->meta->description,
-                    ],
-                    [
-                        'attribute' => 'meta.keywords',
-                        'value'     => $post->meta->keywords,
-                    ],
-                ],
-            ]) ?>
-        </div>
-    </div>
-
-    <h5>Description</h5>
-    <?= Yii::$app->formatter->asNtext($post->description) ?>
-    <hr>
-    <h5>Content</h5>
-    <?= Yii::$app->formatter->asHtml($post->content, [
-        'Attr.AllowedRel'      => array('nofollow'),
-        'HTML.SafeObject'      => true,
-        'Output.FlashCompat'   => true,
-        'HTML.SafeIframe'      => true,
-        'URI.SafeIframeRegexp' => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
+    <h5>SEO</h5>
+    <?= DetailView::widget([
+        'model'      => $post,
+        'attributes' => [
+            [
+                'attribute' => 'meta.title',
+                'value'     => $post->meta->title,
+            ],
+            [
+                'attribute' => 'meta.description',
+                'value'     => $post->meta->description,
+            ],
+            [
+                'attribute' => 'meta.keywords',
+                'value'     => $post->meta->keywords,
+            ],
+        ],
     ]) ?>
-    <hr>
+
     <div id="images">
         <div class="row border-bottom pb-3">
             <div class="col-6">

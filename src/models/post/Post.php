@@ -21,6 +21,7 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property integer $category_id
  * @property integer $created_at
  * @property string $title
+ * @property string $slug
  * @property string $description
  * @property string $content
  * @property string $image
@@ -338,6 +339,18 @@ class Post extends ActiveRecord
                 'class'     => SaveRelationsBehavior::className(),
                 'relations' => ['tagAssignments', 'comments', 'images'],
             ],
+            'slug' => [
+                'class'                => 'Zelenin\yii\behaviors\Slug',
+                'slugAttribute'        => 'slug',
+                'attribute'            => 'title',
+                // optional params
+                'ensureUnique'         => true,
+                'replacement'          => '-',
+                'lowercase'            => true,
+                'immutable'            => false,
+                // If intl extension is enabled, see http://userguide.icu-project.org/transforms/general.
+                'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;'
+            ]
         ];
     }
 

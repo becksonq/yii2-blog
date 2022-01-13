@@ -26,7 +26,11 @@ use yii\bootstrap4\ActiveForm;
     </div>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title'])->label(false) ?>
+
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Slug'])->label(false) ?>
+
     <?= $form->field($model, 'description')->textarea(['rows' => 5, 'placeholder' => 'Description'])->label(false) ?>
+
     <?= $form->field($model, 'content')->widget(\mihaildev\ckeditor\CKEditor::className()) ?>
 
     <?= $form->field($model, 'image')->label('Image 600x333')->widget(FileInput::class, [

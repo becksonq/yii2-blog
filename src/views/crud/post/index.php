@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format'    => 'raw',
                     ],
+                    'slug',
                     [
                         'attribute' => 'category_id',
                         'filter'    => $searchModel->categoriesList(),
