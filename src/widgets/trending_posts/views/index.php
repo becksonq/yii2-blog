@@ -18,10 +18,10 @@ use yii\helpers\Url;
                 if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL): ?>
                     <?= Html::a(Html::img(Html::encode($image->getThumbFileUrl('file', 'trending_post')),
                         ['class' => 'rounded', 'width' => '64', 'alt' => Html::encode($post->title)]),
-                        Url::to(['post', 'id' => $post->id]), []) ?>
+                        Url::to(['single-post', 'id' => $post->id]), []) ?>
                 <?php endif; endforeach; ?>
             <div class="media-body pl-3">
-                <?= Html::tag('h6', Html::a(Html::encode($post->title), Url::to(['post', 'id' => $post->id])), [
+                <?= Html::tag('h6', Html::a(Html::encode($post->title), Url::to(['single-post', 'id' => $post->id])), [
                     'class' => 'blog-entry-title font-size-sm mb-0',
                 ]) ?>
                 <?= Html::tag('span', Html::a(Html::encode($post->user->username), null, [

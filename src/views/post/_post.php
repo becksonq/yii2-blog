@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\StringHelper;
 
-$url = Url::to(['post', 'id' => $model->id]);
+$url = Html::encode(Url::to(['single-post', 'id' => $model->id]));
 ?>
 
 
@@ -30,7 +30,7 @@ $url = Url::to(['post', 'id' => $model->id]);
             <?= Html::a(Yii::$app->formatter->asDate($model->created_at, 'php:M d. Y'), Url::to(['##']),
                 ['class' => 'blog-entry-meta-link',]) ?>
         </div>
-        <?= Html::tag('h2', Html::a(Html::encode($model->title), Html::encode($url), []),
+        <?= Html::tag('h2', Html::a(Html::encode($model->title), $url, []),
             ['class' => 'h5 blog-entry-title']) ?>
     </div>
 
@@ -39,8 +39,7 @@ $url = Url::to(['post', 'id' => $model->id]);
         <?php foreach ($model->images as $image):
             if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL): ?>
                 <?= Html::a(Html::img(Html::encode($image->getThumbFileUrl('file', 'blog_list')),
-                    ['alt' => $model->title]),
-                    Html::encode($url), [
+                    ['alt' => $model->title]), $url, [
                         'class' => 'blog-entry-thumb mb-3',
                     ]) ?>
             <?php endif; endforeach; ?>
@@ -59,7 +58,7 @@ $url = Url::to(['post', 'id' => $model->id]);
 
         <p class="font-size-sm"><?= StringHelper::truncate(Yii::$app->formatter->asNtext($model->description), 174,
                 '...') ?>
-            <?= Html::a('[' . Yii::t('app', 'Читать...') . ']', Html::encode($url), [
+            <?= Html::a('[' . Yii::t('app', 'Читать...') . ']', $url, [
                 'class' => 'blog-entry-meta-link font-weight-medium',
             ]) ?>
         </p>

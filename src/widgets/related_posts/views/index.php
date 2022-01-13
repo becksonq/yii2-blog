@@ -25,7 +25,7 @@ use yii\helpers\Url;
                             if ($image->type == \becksonq\blog\models\post\PostImages::TYPE_CAROUSEL): ?>
                                 <?= Html::a(Html::img(Html::encode($image->getThumbFileUrl('file', 'blog_list')),
                                     ['class' => 'rounded', 'alt' => '']),
-                                    Url::to(['post', 'id' => $post->id,]), [
+                                    Url::to(['single-post', 'id' => $post->id,]), [
                                         'class' => 'blog-entry-thumb mb-3',
                                     ]) ?>
                             <?php endif; endforeach; ?>
@@ -35,7 +35,7 @@ use yii\helpers\Url;
                             <?= Html::a(Yii::$app->formatter->asDate($post->created_at, 'php:M d. Y'), null,
                                 ['class' => 'blog-entry-meta-link']) ?>
                         </div>
-                        <?= Html::tag('h3', Html::a(Html::encode($post->title), Url::to(['post', 'id' => $post->id])), [
+                        <?= Html::tag('h3', Html::a(Html::encode($post->title), Url::to(['single-post', 'id' => $post->id])), [
                             'class' => 'h6 blog-entry-title'
                         ]) ?>
                     </article>

@@ -20,7 +20,7 @@ use yii\helpers\Html;
             <?= Html::beginTag('li', ['class' => 'widget-list-item']) ?>
             <!-- TODO: count постов -->
             <?= Html::a(Html::encode($category->name) . '<span class="font-size-xs text-muted ml-3">' . $category->count . '</span>',
-                ['/blog/post/category', 'slug' => $category->slug], [
+                ['/blog/post/category', 'id' => $category->id], [
                     'class' => 'widget-list-link d-flex justify-content-between align-items-center',
                 ]) ?>
             <?= Html::endTag('li') ?>

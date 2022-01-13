@@ -17,7 +17,7 @@ use yii\helpers\Url;
         foreach ($posts->getModels() as $post): ?>
             <article>
                 <?= Html::beginTag('a',
-                    ['class' => 'blog-entry-thumb mb-3', 'href' => Url::to(['post', 'id' => $post->id])]) ?>
+                    ['class' => 'blog-entry-thumb mb-3', 'href' => Url::to(['single-post', 'id' => $post->id])]) ?>
                 <?= Html::tag('span',
                     '<i class="czi-time"></i>' . Yii::$app->formatter->asDate($post->created_at, 'php:M d. Y'),
                     ['class' => 'blog-entry-meta-label font-size-sm']) ?>
@@ -30,11 +30,11 @@ use yii\helpers\Url;
                 <?= Html::endTag('a') ?>
 
                 <div class="d-flex justify-content-between mb-2 pt-1">
-                    <?= Html::tag('h2', Html::a($post->title, Url::to(['post', 'id' => $post->id])),
+                    <?= Html::tag('h2', Html::a($post->title, Url::to(['single-post', 'id' => $post->id])),
                         ['class' => 'h5 blog-entry-title mb-0']) ?>
 
                     <?= Html::a('<i class="far fa-comment-alt"></i>' . $post->comments_count,
-                        Url::to(['post', 'id' => $post->id, '#' => 'comments']), [
+                        Url::to(['single-post', 'id' => $post->id, '#' => 'comments']), [
                             'class' => 'blog-entry-meta-link font-size-sm text-nowrap ml-3 pt-1',
                         ]) ?>
                 </div>
@@ -43,13 +43,12 @@ use yii\helpers\Url;
                     <?= Html::a('<div class="blog-entry-author-ava">'
                         . Html::img(Html::encode($post->user->avatar) ?: (Yii::getAlias('@web') . '/uploads/img/no-person.webp'),
                             ['alt' => $post->user->username]) .
-                        '</div>' . $post->user->username, Url::to(['#']), [
+                        '</div>' . $post->user->username, Url::to(['##']), [
                         'class' => 'blog-entry-meta-link',
                     ]) ?>
                     <span class="blog-entry-meta-divider"></span>
                     <div class="font-size-sm text-muted">
-                        <?= Html::a(Html::a($post->category->name, Url::to(['#']), ['class' => 'blog-entry-meta-link']),
-                            Url::to(['#']), ['class' => 'blog-entry-meta-link']) ?>
+                        <?= Html::a($post->category->name, Url::to(['##']), ['class' => 'blog-entry-meta-link']) ?>
                     </div>
                 </div>
             </article>

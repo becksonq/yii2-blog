@@ -104,7 +104,7 @@ foreach ($post->tags as $tag) {
             <nav class="entry-navigation" aria-label="Post navigation">
                 <?= Html::beginTag('a', [
                     'class'          => 'entry-navigation-link nav-link ' . ($prev !== null ? '' : 'disabled'),
-                    'href'           => Url::to(['post', 'id' => $prev->id]),
+                    'href'           => Url::to(['single-post', 'id' => $prev->id]),
                     'data-toggle'    => 'popover',
                     'data-placement' => 'top',
                     'data-trigger'   => 'hover',
@@ -123,7 +123,7 @@ foreach ($post->tags as $tag) {
 
                 <?= Html::beginTag('a', [
                     'class'          => 'entry-navigation-link nav-link ' . ($next !== null ? '' : 'disabled'),
-                    'href'           => Url::to(['post', 'id' => $next->id]),
+                    'href'           => Url::to(['single-post', 'id' => $next->id]),
                     'data-toggle'    => 'popover',
                     'data-placement' => 'top',
                     'data-trigger'   => 'hover',
