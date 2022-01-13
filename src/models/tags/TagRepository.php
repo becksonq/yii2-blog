@@ -33,6 +33,24 @@ class TagRepository
     }
 
     /**
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findById($id)
+    {
+        return Tag::find()->andWhere(['id' => $id])->one();
+    }
+
+    /**
+     * @param string $slug
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findBySlug(string $slug)
+    {
+        return Tag::find()->andWhere(['slug' => $slug])->limit(1)->one();
+    }
+
+    /**
      * @param Tag $tag
      */
     public function save(Tag $tag): void
